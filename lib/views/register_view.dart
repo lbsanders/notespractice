@@ -77,7 +77,7 @@ class _RegisterViewState extends State<RegisterView> {
                 } else if (e.code == 'invalid-email') {
                   devtools.log('Invalid email entered');
                 }
-              }git
+              }
             },
             child: const Text('Register'),
           ),
