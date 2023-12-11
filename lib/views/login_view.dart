@@ -65,6 +65,7 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
+                // add code to verify email verification
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   notesRoute,
                   (route) => false,
