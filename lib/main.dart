@@ -55,3 +55,96 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+//
+// class HomePage extends StatefulWidget {
+//   const HomePage({super.key});
+//
+//   @override
+//   State<HomePage> createState() => _HomePageState();
+// }
+//
+// class _HomePageState extends State<HomePage> {
+//   late final TextEditingController _controller;
+//
+//   @override
+//   void initState() {
+//     _controller = TextEditingController();
+//     super.initState();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => CounterBloc(),
+//       child: const Text('Hello world'),
+//     );
+//   }
+// }
+//
+// @immutable
+// abstract class CounterState {
+//   final int value;
+//   const CounterState(this.value);
+// }
+//
+// class CounterStateValid extends CounterState {
+//   const CounterStateValid(super.value);
+// }
+//
+// class CounterStateInvalidNumber extends CounterState {
+//   final String invalidValue;
+//   const CounterStateInvalidNumber({
+//     required this.invalidValue,
+//     required int previousValue,
+//   }) : super(previousValue);
+// }
+//
+// @immutable
+// abstract class CounterEvent {
+//   final String value;
+//   const CounterEvent(this.value);
+// }
+//
+// class IncrementEvent extends CounterEvent {
+//   const IncrementEvent(super.value);
+// }
+//
+// class DecrementEvent extends CounterEvent {
+//   const DecrementEvent(super.value);
+// }
+//
+// class CounterBloc extends Bloc<CounterEvent, CounterState> {
+//   CounterBloc() : super(const CounterStateValid(0)) {
+//     on<IncrementEvent>((event, emit) {
+//       final integer = int.tryParse(event.value);
+//       if (integer == null) {
+//         emit(
+//           CounterStateInvalidNumber(
+//             invalidValue: event.value,
+//             previousValue: state.value,
+//           ),
+//         );
+//       } else {
+//         emit(CounterStateValid(state.value + integer));
+//       }
+//     });
+//     on<DecrementEvent>((event, emit) {
+//       final integer = int.tryParse(event.value);
+//       if (integer == null) {
+//         emit(
+//           CounterStateInvalidNumber(
+//             invalidValue: event.value,
+//             previousValue: state.value,
+//           ),
+//         );
+//       } else {
+//         emit(CounterStateValid(state.value - integer));
+//       }
+//     });
+//   }
+// }
