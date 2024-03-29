@@ -7,6 +7,7 @@ import 'package:notespractice/constants/routes.dart';
 import 'package:notespractice/services/auth/bloc/auth_bloc.dart';
 import 'package:notespractice/services/auth/bloc/auth_event.dart';
 
+import '../services/auth/bloc/auth_state.dart';
 import '../utilities/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -60,33 +61,31 @@ class _LoginViewState extends State<LoginView> {
               hintText: 'Enter your password',
             ),
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                context.read<AuthBloc>().add(AuthEventLogIn(
-                      email,
-                      password,
-                    ));
-              } on InvalidLoginCredentialsAuthException {
-                await showErrorDialog(
-                  context,
-                  'Invalid login credentials',
-                );
-              } on InvalidEmailAuthException {
-                await showErrorDialog(
-                  context,
-                  'Invalid email',
-                );
-              } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  'Authentication error',
-                );
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is AuthStateLoggedOut) {
+                if (state.exception is InvalidLoginCredentialsAuthException) {
+                  await showErrorDialog(context, 'Invalid login credentials');
+                } else if (state.exception is InvalidEmailAuthException) {
+                  await showErrorDialog(context, 'Invalid email');
+                } else if (state.exception is GenericAuthException) {
+                  await showErrorDialog(context, 'Authentication error');
+                }
               }
             },
-            child: const Text('Login'),
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(
+                      AuthEventLogIn(
+                        email,
+                        password,
+                      ),
+                    );
+              },
+              child: const Text('Login'),
+            ),
           ),
           TextButton(
             onPressed: () {
